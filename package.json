@@ -14,9 +14,15 @@
     "ml:infer": "python3 ml/infer.py",
     "data:download": "python3 ml/ingest/download.py",
     "data:build": "python3 ml/ingest/build_training.py",
-    "data:ingest": "python3 ml/ingest/download.py && python3 ml/ingest/build_training.py"
+    "data:ingest": "python3 ml/ingest/download.py && python3 ml/ingest/build_training.py",
+    "data:listings": "python3 ml/ingest/listings.py --max 200",
+    "metrics:detection": "python3 ml/metrics/evaluate_detection.py",
+    "metrics": "python3 ml/ingest/listings.py --max 200 && python3 ml/metrics/evaluate_detection.py",
+    "worker": "tsx src/workers/index.ts"
   },
   "dependencies": {
+    "bullmq": "^6.0.5",
+    "ioredis": "^6.0.0",
     "next": "^16.2.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -29,6 +35,7 @@
     "@vitejs/plugin-react": "^6.0.5",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
+    "tsx": "^4.23.4",
     "typescript": "^5",
     "vitest": "^4.1.10"
   }

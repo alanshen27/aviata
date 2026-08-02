@@ -19,10 +19,20 @@ True **empty-leg / ferry** labels are almost never in open ADS-B sets. Training 
 1. **Weak labels** from leg geometry (asymmetric onward vs return, ground time, FBO pair).
 2. Later: operator FMS / marketplace confirms as hard labels.
 
+## Empty-leg *listings* (positive labels)
+
+See [`LISTINGS.md`](./LISTINGS.md). Quick open feed:
+
+```bash
+python3 ml/ingest/listings.py --max 200
+```
+
 ## Default ingest
 
 ```bash
 python3 ml/ingest/download.py          # raw files → ml/data/raw/
 python3 ml/ingest/build_training.py    # features → ml/data/processed/
+python3 ml/ingest/listings.py --max 200
+python3 ml/metrics/evaluate_detection.py
 python3 ml/train_all.py --from-open-data
 ```

@@ -50,3 +50,4 @@ ml/.venv/
 ml/data/raw/**
 !ml/data/raw/.gitkeep
 ml/data/processed/*.parquet
+ml/data/raw/empty_legs_rss.xml

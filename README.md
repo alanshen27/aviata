@@ -36,6 +36,19 @@ npm run ml:train:open        # XGBoost on weakly labeled open legs (+ some synth
 
 Status JSON: `GET /api/data`
 
+### Listings + deterministic metrics
+
+Empty legs are listed on marketplaces (see [`ml/data/LISTINGS.md`](ml/data/LISTINGS.md)).
+Open feed ingest + hash-stable detection metrics:
+
+```bash
+npm run metrics                 # listings RSS + detection_metrics.json
+# or:
+npm run data:listings && npm run metrics:detection
+```
+
+Report: `ml/metrics/reports/detection_metrics.json` · API: `GET /api/metrics`
+
 ### Train the Python models
 
 ```bash

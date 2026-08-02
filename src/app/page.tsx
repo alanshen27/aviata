@@ -58,7 +58,9 @@ export default async function Home() {
           <h2>How the models work</h2>
           <p>
             Empty-leg detection and personal return timing are separate heads on
-            the same aviation OSINT stack.
+            the same aviation OSINT stack. Deterministic metrics live at{" "}
+            <code>/api/metrics</code>; public listing sources in{" "}
+            <code>ml/data/LISTINGS.md</code>.
           </p>
         </div>
         <div className={styles.modelGrid}>

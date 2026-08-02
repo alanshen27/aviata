@@ -1,0 +1,48 @@
+{
+  "source": "limitless_sky_rss",
+  "url": "https://thelimitlesssky.com/api/public/empty-legs/rss.xml?max=200",
+  "channel": "Live worldwide empty-leg private jet deals \u2014 up to 75% off published charter rates. 1,837 legs available worldwide.",
+  "count": 76,
+  "feature_rows": 76,
+  "raw": "/agent/reposition/ml/data/raw/empty_legs_rss.xml",
+  "json": "/agent/reposition/ml/data/processed/listed_empty_legs.json",
+  "features_csv": "/agent/reposition/ml/data/processed/listed_empty_leg_features.csv",
+  "fetched_at": "2026-08-02T20:13:56.831933+00:00",
+  "sample": [
+    {
+      "origin": "TUL",
+      "destination": "TEX",
+      "aircraft": "Learjet 60XR",
+      "departure_date": "2026-08-02",
+      "price_text": "On request"
+    },
+    {
+      "origin": "PWK",
+      "destination": "APA",
+      "aircraft": "Cessna Citation XLS ",
+      "departure_date": "2026-08-02",
+      "price_text": "On request"
+    },
+    {
+      "origin": "MAN",
+      "destination": "CEQ",
+      "aircraft": "Embraer Phenom 300E",
+      "departure_date": "2026-08-02",
+      "price_text": "\u00a39,560"
+    },
+    {
+      "origin": "CFR",
+      "destination": "DOL",
+      "aircraft": "Cessna Citation CJ1 ",
+      "departure_date": "2026-08-02",
+      "price_text": "On request"
+    },
+    {
+      "origin": "LJU",
+      "destination": "SMV",
+      "aircraft": "Embraer Phenom 300",
+      "departure_date": "2026-08-02",
+      "price_text": "On request"
+    }
+  ]
+}
