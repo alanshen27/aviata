@@ -17,7 +17,7 @@ const figtree = Figtree({
 export const metadata: Metadata = {
   title: "REPOSITION — Empty legs from OSINT",
   description:
-    "Detect private-jet empty legs from ADS-B OSINT with XGBoost + LSTM classifiers, then sell the seats.",
+    "3D empty-leg intelligence: ADS-B OSINT, XGBoost + LSTM detection, Transformer return windows.",
 };
 
 export default function RootLayout({

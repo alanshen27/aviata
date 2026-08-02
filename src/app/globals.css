@@ -24,10 +24,11 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--ink);
+  background: #050b11;
   color: var(--vapor);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 body {
