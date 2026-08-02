@@ -1,0 +1,74 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy: Dashboard → New → Blueprint → connect alanshen27/aviata
+#
+# Secrets with sync:false are prompted once in the Dashboard (never commit values).
+
+previews:
+  generation: off
+
+services:
+  - type: keyvalue
+    name: reposition-redis
+    plan: free
+    maxmemoryPolicy: noeviction
+    ipAllowList: [] # private network only (web + worker)
+
+  - type: web
+    name: reposition-web
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: .
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: reposition-redis
+          property: connectionString
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      # Optional — leave blank until you wire Stripe / live feeds
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: OPENSKY_USERNAME
+        sync: false
+      - key: OPENSKY_PASSWORD
+        sync: false
+      - key: REPOSITION_USE_PYTHON_ML
+        value: "0"
+
+  - type: worker
+    name: reposition-worker
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: .
+    buildCommand: npm ci
+    startCommand: npm run worker
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: reposition-redis
+          property: connectionString
+      - key: WORKER_CONCURRENCY
+        value: "2"
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
