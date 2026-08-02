@@ -184,23 +184,92 @@
   line-height: 1.45;
 }
 
+.personnelBlock {
+  margin-bottom: 1rem;
+}
+
+.personnelLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.55rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.personnelLabel strong {
+  font-family: var(--font-display);
+  color: var(--signal-hot);
+  font-size: 1.15rem;
+}
+
+.personnelRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.paxChip,
+.paxChipActive {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 4px;
+  min-width: 2.4rem;
+  padding: 0.45rem 0.55rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.paxChip:hover {
+  color: var(--vapor);
+  border-color: rgba(238, 244, 247, 0.35);
+}
+
+.paxChipActive {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: #14110a;
+}
+
 .fleetMeta {
   display: grid;
   gap: 0.55rem;
-  margin-top: 0.75rem;
+  margin-top: 0.35rem;
 }
 
 .fleetChip {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
+  align-items: center;
   padding: 0.55rem 0;
   border-top: 1px solid rgba(238, 244, 247, 0.08);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  width: 100%;
+  background: none;
+  color: inherit;
   font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
 }
 
 .fleetChip strong {
   font-family: var(--font-display);
+}
+
+.seatPill {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mint);
+  border: 1px solid rgba(62, 207, 172, 0.35);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
 }
 
 .dealList {

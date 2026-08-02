@@ -1,19 +1,29 @@
 "use client";
 
+import { useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ContactShadows, OrbitControls } from "@react-three/drei";
+import { ContactShadows, OrbitControls, Text } from "@react-three/drei";
 import type { AircraftClass } from "@/lib/types";
-import { FLEET, SelectableJet } from "./PlaneMesh";
+import { FLEET, fleetForPersonnel, SelectableJet, type FleetOption } from "./PlaneMesh";
 
 export function PlaneChooser({
   selected,
   onSelect,
+  personnel,
+  options,
 }: {
   selected: AircraftClass | null;
   onSelect: (id: AircraftClass) => void;
+  /** Party size — only jets with seats ≥ this are shown */
+  personnel: number;
+  options?: FleetOption[];
 }) {
-  const spacing = 2.15;
-  const start = -((FLEET.length - 1) * spacing) / 2;
+  const visible = useMemo(
+    () => options ?? fleetForPersonnel(personnel),
+    [options, personnel],
+  );
+  const spacing = visible.length > 4 ? 1.85 : 2.15;
+  const start = -((Math.max(visible.length, 1) - 1) * spacing) / 2;
 
   return (
     <Canvas
@@ -34,15 +44,45 @@ export function PlaneChooser({
       <directionalLight position={[-4, 2, -2]} intensity={0.55} color="#3ecfac" />
       <pointLight position={[0, 2, 3]} intensity={0.6} color="#f0c14b" />
 
-      {FLEET.map((opt, i) => (
-        <SelectableJet
-          key={opt.id}
-          option={opt}
-          position={[start + i * spacing, 0, 0]}
-          selected={selected === opt.id}
-          onSelect={onSelect}
-        />
+      {visible.map((opt, i) => (
+        <group key={opt.id} position={[start + i * spacing, 0, 0]}>
+          <SelectableJet
+            option={opt}
+            position={[0, 0, 0]}
+            selected={selected === opt.id}
+            onSelect={onSelect}
+          />
+          <Text
+            position={[0, -1.05, 0]}
+            fontSize={0.22}
+            color={selected === opt.id ? "#f0c14b" : "#c9d6df"}
+            anchorX="center"
+            anchorY="middle"
+          >
+            {`${opt.seats} pax`}
+          </Text>
+          <Text
+            position={[0, -1.32, 0]}
+            fontSize={0.16}
+            color="#8a9aa6"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {opt.label}
+          </Text>
+        </group>
       ))}
+
+      {visible.length === 0 && (
+        <Text
+          position={[0, 0.2, 0]}
+          fontSize={0.28}
+          color="#c9d6df"
+          anchorX="center"
+        >
+          No jets fit this party size
+        </Text>
+      )}
 
       <ContactShadows
         position={[0, -0.7, 0]}
@@ -63,4 +103,4 @@ export function PlaneChooser({
   );
 }
 
-export { FLEET };
+export { FLEET, fleetForPersonnel, PERSONNEL_OPTIONS } from "./PlaneMesh";

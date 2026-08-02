@@ -1,11 +1,15 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { AircraftClass, EmptyLegCandidate } from "@/lib/types";
 import { AlertSignup } from "@/components/AlertSignup";
 import { ForYou } from "@/components/ForYou";
-import { FLEET } from "./PlaneChooser";
+import {
+  FLEET,
+  PERSONNEL_OPTIONS,
+  fleetForPersonnel,
+} from "./PlaneMesh";
 import styles from "./spa.module.css";
 
 const EarthScene = dynamic(
@@ -35,21 +39,47 @@ function money(n: number) {
 
 export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
   const [view, setView] = useState<View>("globe");
+  const [personnel, setPersonnel] = useState<number>(6);
   const [selectedClass, setSelectedClass] = useState<AircraftClass | null>(
     null,
   );
 
+  const visibleFleet = useMemo(
+    () => fleetForPersonnel(personnel),
+    [personnel],
+  );
+
+  // Drop selection if the jet no longer fits the party size.
+  useEffect(() => {
+    if (
+      selectedClass &&
+      !visibleFleet.some((f) => f.id === selectedClass)
+    ) {
+      setSelectedClass(null);
+    }
+  }, [visibleFleet, selectedClass]);
+
   const filtered = useMemo(() => {
-    if (!selectedClass) return legs;
-    return legs.filter((l) => l.aircraftType.aircraftClass === selectedClass);
-  }, [legs, selectedClass]);
+    return legs.filter((l) => {
+      const seats = l.aircraftType.typicalSeats;
+      if (seats < personnel) return false;
+      if (selectedClass && l.aircraftType.aircraftClass !== selectedClass) {
+        return false;
+      }
+      return true;
+    });
+  }, [legs, personnel, selectedClass]);
 
   const selectedMeta = FLEET.find((f) => f.id === selectedClass) ?? null;
 
   return (
     <div className={styles.shell}>
       <header className={styles.nav}>
-        <button type="button" className={styles.brand} onClick={() => setView("globe")}>
+        <button
+          type="button"
+          className={styles.brand}
+          onClick={() => setView("globe")}
+        >
           REPOSITION
         </button>
         <nav className={styles.tabs}>
@@ -89,12 +119,14 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
             <div className={styles.canvasWrap}>
               <PlaneChooser
                 selected={selectedClass}
-                onSelect={(id) => {
-                  setSelectedClass(id);
-                }}
+                personnel={personnel}
+                options={visibleFleet}
+                onSelect={(id) => setSelectedClass(id)}
               />
             </div>
-            <p className={styles.hint}>Click a jet · drag to inspect</p>
+            <p className={styles.hint}>
+              Filter by personnel · click a jet that fits
+            </p>
           </>
         )}
 
@@ -104,8 +136,8 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
               <h1 className={styles.brandHuge}>Reposition</h1>
               <p className={styles.headline}>Empty legs on a living earth.</p>
               <p className={styles.sub}>
-                OSINT arcs light up when jets ferry empty. Pick a cabin class in
-                Fleet, then claim the seat before the desk does.
+                Dial party size in Fleet — only jets with enough seats stay on
+                the bay, then the globe and deals follow.
               </p>
               <div className={styles.ctaRow}>
                 <button
@@ -113,7 +145,7 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
                   className={styles.btnPrimary}
                   onClick={() => setView("fleet")}
                 >
-                  Choose a jet
+                  Choose by personnel
                 </button>
                 <button
                   type="button"
@@ -127,81 +159,114 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
           </div>
         )}
 
-        {view === "fleet" && (
+        {(view === "fleet" || view === "deals") && (
           <aside className={styles.panel}>
-            <h2>Fleet bay</h2>
+            <h2>{view === "fleet" ? "Fleet bay" : "Empty legs"}</h2>
             <p className={styles.panelLead}>
-              Interactive cabin classes. Selection filters the globe arcs and
-              deal board.
+              {view === "fleet"
+                ? "Set personnel count — 3D jets update to cabins that fit your party."
+                : selectedMeta
+                  ? `${selectedMeta.label} · ≥${personnel} pax · ${filtered.length} matches`
+                  : `≥${personnel} pax · ${filtered.length} legs on the board`}
             </p>
-            <div className={styles.fleetMeta}>
-              {FLEET.map((f) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  className={styles.fleetChip}
-                  style={{
-                    borderColor:
-                      selectedClass === f.id ? "rgba(215,161,46,0.5)" : undefined,
-                    color: selectedClass === f.id ? "#f0c14b" : undefined,
-                  }}
-                  onClick={() => setSelectedClass(f.id)}
-                >
-                  <strong>{f.label}</strong>
-                  <span>{f.blurb}</span>
-                </button>
-              ))}
-            </div>
-            <div className={styles.ctaRow} style={{ marginTop: "1.1rem" }}>
-              <button
-                type="button"
-                className={styles.btnPrimary}
-                onClick={() => setView("deals")}
-                disabled={!selectedClass}
-              >
-                {selectedMeta
-                  ? `See ${selectedMeta.label} deals`
-                  : "Select a class"}
-              </button>
-              {selectedClass && (
-                <button
-                  type="button"
-                  className={styles.btnGhost}
-                  onClick={() => setSelectedClass(null)}
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-          </aside>
-        )}
 
-        {view === "deals" && (
-          <aside className={styles.panel}>
-            <h2>Empty legs</h2>
-            <p className={styles.panelLead}>
-              {selectedMeta
-                ? `Filtered to ${selectedMeta.label.toLowerCase()} · ${filtered.length} matches`
-                : `${filtered.length} OSINT-ranked legs on the board`}
-            </p>
-            <div className={styles.dealList}>
-              {filtered.slice(0, 8).map((leg) => (
-                <article key={leg.id} className={styles.dealItem}>
-                  <div className={styles.dealRoute}>
-                    {code(leg, "origin")} → {code(leg, "destination")}
-                  </div>
-                  <div className={styles.dealMeta}>
-                    {leg.aircraftType.name} · {Math.round(leg.confidence * 100)}%
-                    empty · {money(leg.estimatedPriceUsd)}
-                  </div>
-                </article>
-              ))}
-              {filtered.length === 0 && (
-                <p className={styles.dealMeta}>
-                  No legs in this class — clear the filter or pick another jet.
-                </p>
-              )}
+            <div className={styles.personnelBlock}>
+              <div className={styles.personnelLabel}>
+                <span>Personnel</span>
+                <strong>
+                  {personnel} {personnel === 1 ? "person" : "people"}
+                </strong>
+              </div>
+              <div className={styles.personnelRow}>
+                {PERSONNEL_OPTIONS.map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    className={
+                      personnel === n ? styles.paxChipActive : styles.paxChip
+                    }
+                    onClick={() => setPersonnel(n)}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {view === "fleet" && (
+              <>
+                <div className={styles.fleetMeta}>
+                  {visibleFleet.map((f) => (
+                    <button
+                      key={f.id}
+                      type="button"
+                      className={styles.fleetChip}
+                      style={{
+                        color:
+                          selectedClass === f.id ? "#f0c14b" : undefined,
+                      }}
+                      onClick={() => setSelectedClass(f.id)}
+                    >
+                      <span>
+                        <strong>{f.label}</strong>
+                        <div style={{ color: "#8a9aa6", fontSize: "0.82rem" }}>
+                          {f.blurb}
+                        </div>
+                      </span>
+                      <span className={styles.seatPill}>{f.seats} seats</span>
+                    </button>
+                  ))}
+                  {visibleFleet.length === 0 && (
+                    <p className={styles.dealMeta}>
+                      Nothing seats {personnel}+ — try a smaller party.
+                    </p>
+                  )}
+                </div>
+                <div className={styles.ctaRow} style={{ marginTop: "1.1rem" }}>
+                  <button
+                    type="button"
+                    className={styles.btnPrimary}
+                    onClick={() => setView("deals")}
+                  >
+                    {selectedMeta
+                      ? `See ${selectedMeta.seats}-seat deals`
+                      : `See ${personnel}+ pax deals`}
+                  </button>
+                  {selectedClass && (
+                    <button
+                      type="button"
+                      className={styles.btnGhost}
+                      onClick={() => setSelectedClass(null)}
+                    >
+                      Clear jet
+                    </button>
+                  )}
+                </div>
+              </>
+            )}
+
+            {view === "deals" && (
+              <div className={styles.dealList}>
+                {filtered.slice(0, 8).map((leg) => (
+                  <article key={leg.id} className={styles.dealItem}>
+                    <div className={styles.dealRoute}>
+                      {code(leg, "origin")} → {code(leg, "destination")}
+                    </div>
+                    <div className={styles.dealMeta}>
+                      {leg.aircraftType.name} · {leg.aircraftType.typicalSeats}{" "}
+                      seats · {Math.round(leg.confidence * 100)}% empty ·{" "}
+                      {money(leg.estimatedPriceUsd)}
+                    </div>
+                  </article>
+                ))}
+                {filtered.length === 0 && (
+                  <p className={styles.dealMeta}>
+                    No legs seat {personnel}+ with this filter — lower personnel
+                    or clear the jet.
+                  </p>
+                )}
+              </div>
+            )}
           </aside>
         )}
 

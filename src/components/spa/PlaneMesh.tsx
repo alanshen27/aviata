@@ -9,15 +9,21 @@ export interface FleetOption {
   id: AircraftClass;
   label: string;
   blurb: string;
+  /** Typical passenger / personnel capacity */
+  seats: number;
   scale: number;
   color: string;
 }
+
+/** Stepped party sizes for the fleet filter. */
+export const PERSONNEL_OPTIONS = [2, 4, 6, 8, 10, 12, 14, 16] as const;
 
 export const FLEET: FleetOption[] = [
   {
     id: "very_light",
     label: "Very light",
-    blurb: "CJ2 / Phenom hops",
+    blurb: "CJ2 hops",
+    seats: 6,
     scale: 0.72,
     color: "#8fd6c4",
   },
@@ -25,6 +31,7 @@ export const FLEET: FleetOption[] = [
     id: "light",
     label: "Light",
     blurb: "Citation / PC-24",
+    seats: 8,
     scale: 0.88,
     color: "#c9d6df",
   },
@@ -32,6 +39,7 @@ export const FLEET: FleetOption[] = [
     id: "midsize",
     label: "Midsize",
     blurb: "Latitude / Lear",
+    seats: 9,
     scale: 1,
     color: "#eef4f7",
   },
@@ -39,13 +47,15 @@ export const FLEET: FleetOption[] = [
     id: "super_midsize",
     label: "Super-mid",
     blurb: "Challenger 350",
+    seats: 10,
     scale: 1.15,
     color: "#f0c14b",
   },
   {
     id: "heavy",
     label: "Heavy",
-    blurb: "G450 / Challenger 605",
+    blurb: "G450 / CL605",
+    seats: 14,
     scale: 1.35,
     color: "#d7a12e",
   },
@@ -53,10 +63,15 @@ export const FLEET: FleetOption[] = [
     id: "ultra_long_range",
     label: "Ultra long",
     blurb: "G650 / Global",
+    seats: 16,
     scale: 1.55,
     color: "#ffd978",
   },
 ];
+
+export function fleetForPersonnel(personnel: number): FleetOption[] {
+  return FLEET.filter((f) => f.seats >= personnel);
+}
 
 /** Low-poly business jet — fuselage, wings, tail, engines. */
 export function JetModel({
