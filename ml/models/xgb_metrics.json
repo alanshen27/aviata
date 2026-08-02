@@ -1,0 +1,52 @@
+{
+  "model": "xgboost",
+  "feature_names": [
+    "distance_nm",
+    "ground_time_hours",
+    "origin_private_score",
+    "dest_private_score",
+    "fbo_pair_score",
+    "is_asymmetric",
+    "is_return_corridor",
+    "short_turnaround",
+    "idle_then_ferry",
+    "one_way_ratio_7d",
+    "legs_last_48h",
+    "hour_of_day_utc",
+    "dow",
+    "aircraft_class_ord",
+    "typical_seats",
+    "same_country",
+    "prior_leg_distance_nm",
+    "heading_delta_deg"
+  ],
+  "auc": 0.986470667904961,
+  "positive_rate": 0.2916,
+  "report": {
+    "0": {
+      "precision": 0.9725433526011561,
+      "recall": 0.9505649717514124,
+      "f1-score": 0.9614285714285714,
+      "support": 708.0
+    },
+    "1": {
+      "precision": 0.8863636363636364,
+      "recall": 0.934931506849315,
+      "f1-score": 0.91,
+      "support": 292.0
+    },
+    "accuracy": 0.946,
+    "macro avg": {
+      "precision": 0.9294534944823962,
+      "recall": 0.9427482393003637,
+      "f1-score": 0.9357142857142857,
+      "support": 1000.0
+    },
+    "weighted avg": {
+      "precision": 0.9473788754598004,
+      "recall": 0.946,
+      "f1-score": 0.9464114285714286,
+      "support": 1000.0
+    }
+  }
+}

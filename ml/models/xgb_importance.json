@@ -1,0 +1,20 @@
+{
+  "distance_nm": 0.010060024447739124,
+  "ground_time_hours": 0.027831535786390305,
+  "origin_private_score": 0.010295151732861996,
+  "dest_private_score": 0.009031272493302822,
+  "fbo_pair_score": 0.014585680328309536,
+  "is_asymmetric": 0.7541727423667908,
+  "is_return_corridor": 0.05518596991896629,
+  "short_turnaround": 0.0271125640720129,
+  "idle_then_ferry": 0.012023753486573696,
+  "one_way_ratio_7d": 0.02402789704501629,
+  "legs_last_48h": 0.007683632895350456,
+  "hour_of_day_utc": 0.006963441148400307,
+  "dow": 0.007210430223494768,
+  "aircraft_class_ord": 0.006020355969667435,
+  "typical_seats": 0.007301438134163618,
+  "same_country": 0.004430369473993778,
+  "prior_leg_distance_nm": 0.007396967615932226,
+  "heading_delta_deg": 0.00866667926311493
+}

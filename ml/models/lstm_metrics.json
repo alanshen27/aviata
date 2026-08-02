@@ -1,0 +1,8 @@
+{
+  "model": "lstm",
+  "auc": 1.0,
+  "epochs": 14,
+  "seq_len": 4,
+  "feature_dim": 18,
+  "positive_rate": 0.489
+}

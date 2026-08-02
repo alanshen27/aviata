@@ -1,0 +1,422 @@
+.page {
+  min-height: 100vh;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+.navBrand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.25rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.navLinks a:hover {
+  color: var(--vapor);
+}
+
+.hero {
+  position: relative;
+  min-height: calc(100vh - 4.5rem);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.heroAtmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(7, 16, 24, 0.35) 45%, rgba(7, 16, 24, 0.92) 100%),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 48px,
+      rgba(238, 244, 247, 0.025) 48px,
+      rgba(238, 244, 247, 0.025) 49px
+    ),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(215, 161, 46, 0.18), transparent 60%),
+    linear-gradient(115deg, #0b1824 0%, #122536 40%, #0a141d 100%);
+  z-index: 0;
+}
+
+.heroAtmosphere::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 22%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 161, 46, 0.7),
+    transparent
+  );
+  transform-origin: left;
+  animation: sweep 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+.runwayLights {
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  width: min(70%, 720px);
+  height: 2px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.runwayLights span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 12px rgba(215, 161, 46, 0.8);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+.runwayLights span:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.runwayLights span:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.runwayLights span:nth-child(4) {
+  animation-delay: 0.9s;
+}
+.runwayLights span:nth-child(5) {
+  animation-delay: 1.2s;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem 4.5rem;
+}
+
+.brandMark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.4rem, 12vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.25rem;
+  text-transform: uppercase;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3.2vw, 2rem);
+  font-weight: 700;
+  max-width: 18ch;
+  margin: 0 0 0.85rem;
+  line-height: 1.15;
+}
+
+.subhead {
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin: 0 0 1.75rem;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btnPrimary,
+.btnGhost {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.btnPrimary {
+  background: var(--signal);
+  color: #14110a;
+}
+
+.btnPrimary:hover {
+  background: var(--signal-hot);
+  transform: translateY(-1px);
+}
+
+.btnGhost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--vapor);
+}
+
+.btnGhost:hover {
+  border-color: rgba(238, 244, 247, 0.35);
+}
+
+.section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+}
+
+.sectionHead {
+  margin-bottom: 2rem;
+}
+
+.sectionHead h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.sectionHead p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 40rem;
+  line-height: 1.5;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.filters input,
+.filters select,
+.alertForm input,
+.alertForm select {
+  background: rgba(13, 26, 36, 0.85);
+  border: 1px solid var(--line);
+  color: var(--vapor);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.85rem;
+  min-width: 140px;
+}
+
+.dealList {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.dealRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr 0.7fr;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+  transition: background 0.2s ease;
+}
+
+.dealRow:hover {
+  background: rgba(238, 244, 247, 0.03);
+}
+
+.route {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 0.35rem;
+  line-height: 1.45;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.price small {
+  display: block;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.scoreStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.scoreBar {
+  height: 4px;
+  background: rgba(238, 244, 247, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.15rem;
+}
+
+.scoreBar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--mint), var(--signal));
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mint);
+  border: 1px solid rgba(62, 207, 172, 0.35);
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius);
+  margin-right: 0.35rem;
+  margin-top: 0.4rem;
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.plan {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.plan h3 {
+  font-family: var(--font-display);
+  margin: 0 0 0.35rem;
+  font-size: 1.4rem;
+}
+
+.planPrice {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
+.planPrice span {
+  font-size: 0.95rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.plan ul {
+  margin: 1rem 0 1.25rem;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+}
+
+.plan li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(238, 244, 247, 0.06);
+}
+
+.planFeatured .planPrice {
+  color: var(--signal-hot);
+}
+
+.alertForm {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr auto;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  max-width: 720px;
+}
+
+.modelGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.modelBlock h3 {
+  font-family: var(--font-display);
+  margin: 0 0 0.5rem;
+}
+
+.modelBlock p,
+.modelBlock li {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.modelBlock ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 2rem 1.5rem 3rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.toast {
+  margin-top: 0.85rem;
+  color: var(--mint);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 900px) {
+  .dealRow {
+    grid-template-columns: 1fr 1fr;
+  }
+  .plans {
+    grid-template-columns: 1fr;
+  }
+  .modelGrid {
+    grid-template-columns: 1fr;
+  }
+  .alertForm {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .navLinks {
+    display: none;
+  }
+  .dealRow {
+    grid-template-columns: 1fr;
+  }
+  .heroInner {
+    padding-bottom: 3rem;
+  }
+}
