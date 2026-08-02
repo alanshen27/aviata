@@ -102,6 +102,11 @@ src/app/api/       /legs /score /alerts /collect
 ml/                XGBoost + LSTM training & inference (Python)
 ```
 
+## Deploy / secrets
+
+- API keys checklist: [`docs/API_KEYS.md`](docs/API_KEYS.md)
+- Render Blueprint IaC: [`render.yaml`](render.yaml) · [`docs/RENDER.md`](docs/RENDER.md)
+
 ## Next hard steps
 
 1. Registry enrichment (ICAO type / operator) on live hex codes.

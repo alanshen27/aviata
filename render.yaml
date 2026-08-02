@@ -9,7 +9,7 @@ previews:
 services:
   - type: keyvalue
     name: reposition-redis
-    plan: free
+    plan: free # 25MB, no persistence; upgrade for prod queues
     maxmemoryPolicy: noeviction
     ipAllowList: [] # private network only (web + worker)
 
@@ -50,10 +50,11 @@ services:
       - key: REPOSITION_USE_PYTHON_ML
         value: "0"
 
+  # Workers cannot use free plan — starter is ~$7/mo. Omit this service to run web-only.
   - type: worker
     name: reposition-worker
     runtime: node
-    plan: free
+    plan: starter
     region: oregon
     rootDir: .
     buildCommand: npm ci

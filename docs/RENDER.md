@@ -6,9 +6,9 @@ Blueprint file: [`render.yaml`](../render.yaml)
 
 | Resource | Name | Role |
 |----------|------|------|
-| Key Value (Redis) | `reposition-redis` | BullMQ for `/api/jobs` + worker |
-| Web | `reposition-web` | Next.js (`npm start`) |
-| Worker | `reposition-worker` | `npm run worker` |
+| Key Value (Redis) | `reposition-redis` | Free — BullMQ for `/api/jobs` + worker |
+| Web | `reposition-web` | Free — Next.js (`npm start`) |
+| Worker | `reposition-worker` | **Starter (~$7/mo)** — free plan not allowed for workers |
 
 ## Deploy
 
