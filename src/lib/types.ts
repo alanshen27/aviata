@@ -98,3 +98,47 @@ export interface PricingPlan {
   features: string[];
   cta: string;
 }
+
+/** One completed passenger trip used for personalization. */
+export interface TravelerTrip {
+  origin: string;
+  destination: string;
+  departedAt: string;
+  returnedAt?: string;
+  /** Nights away before returning home; learned from history when omitted */
+  stayDays?: number;
+}
+
+export interface TravelerProfile {
+  id: string;
+  displayName: string;
+  /** Home / base airport (IATA or ICAO) */
+  homeAirport: string;
+  trips: TravelerTrip[];
+  /** Where they are right now, if different from home */
+  currentAirport?: string;
+  /** ISO time they arrived at currentAirport */
+  arrivedAtCurrent?: string;
+}
+
+export interface ReturnPrediction {
+  homeAirport: string;
+  currentAirport: string;
+  daysAway: number;
+  predictedStayDays: number;
+  /** Probability they want a homebound flight in the next window */
+  returnProbability: number;
+  /** Suggested search window in days from now */
+  recommendInDays: number;
+  reason: string;
+  backend: "transformer" | "lstm" | "builtin";
+}
+
+export interface FlightRecommendation {
+  id: string;
+  score: number;
+  kind: "return_home" | "next_corridor" | "explore";
+  reason: string;
+  prediction: ReturnPrediction;
+  leg: EmptyLegCandidate;
+}

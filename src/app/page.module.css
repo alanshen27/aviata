@@ -210,6 +210,23 @@
   margin-bottom: 1.5rem;
 }
 
+.predictionBanner {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.1rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.predictionBanner strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--signal-hot);
+}
+
+.predictionBanner p {
+  margin: 0.45rem 0 0;
+}
+
 .filters input,
 .filters select,
 .alertForm input,

@@ -6,11 +6,14 @@ Detect private-jet **empty legs** from ADS-B OSINT, score them with **XGBoost + 
 
 1. **Ingest OSINT** — demo legs today; optional OpenSky live snapshot (`GET /api/collect`, research license only).
 2. **Engineer features** — distance, ground time, FBO airport scores, route asymmetry, turnaround / idle-ferry flags, one-way history.
-3. **Classify**
+3. **Classify empty legs**
    - **XGBoost** — tabular `P(empty_leg)`
    - **LSTM** — sequence model over the last few legs for a tail
    - **Ensemble** — `0.45·xgb + 0.35·lstm + 0.20·heuristic`
-4. **Sell** — public board (Scout) + paid Radar/Broker alert signup (`POST /api/alerts`).
+4. **Recommend to travelers (Transformer)**
+   - Learns home base + corridor stay length (e.g. SIN→PVG ~7 days)
+   - When the return window opens, ranks homebound empty legs (`GET /api/recommend`)
+5. **Sell** — public board (Scout) + paid Radar/Broker alert signup (`POST /api/alerts`).
 
 ## Quick start
 

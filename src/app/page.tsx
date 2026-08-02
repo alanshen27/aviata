@@ -1,4 +1,5 @@
 import { DealBoard } from "@/components/DealBoard";
+import { ForYou } from "@/components/ForYou";
 import { AlertSignup } from "@/components/AlertSignup";
 import { getLegs } from "@/lib/store";
 import styles from "./page.module.css";
@@ -12,6 +13,7 @@ export default async function Home() {
         <div className={styles.navBrand}>REPOSITION</div>
         <nav className={styles.navLinks}>
           <a href="#deals">Deals</a>
+          <a href="#foryou">For you</a>
           <a href="#models">Models</a>
           <a href="#pricing">Pricing</a>
         </nav>
@@ -32,57 +34,56 @@ export default async function Home() {
             Empty legs, detected from the open sky.
           </p>
           <p className={`${styles.subhead} rise rise-delay-2`}>
-            OSINT from ADS-B tracks private jets. XGBoost and LSTM classifiers
-            score which legs are empty — then you sell the seats before the
-            brokers do.
+            OSINT finds empty legs. A Transformer learns your trip rhythm —
+            home in Singapore, week in China, then recommends the homebound
+            seat.
           </p>
           <div className={`${styles.ctaRow} rise rise-delay-3`}>
-            <a className={styles.btnPrimary} href="#deals">
-              See detected legs
+            <a className={styles.btnPrimary} href="#foryou">
+              See my return window
             </a>
-            <a className={styles.btnGhost} href="#pricing">
-              Sell alerts
+            <a className={styles.btnGhost} href="#deals">
+              Browse all legs
             </a>
           </div>
         </div>
       </section>
 
+      <ForYou />
+
       <DealBoard legs={legs} />
 
       <section className={styles.section} id="models">
         <div className={styles.sectionHead}>
-          <h2>How the classifiers work</h2>
+          <h2>How the models work</h2>
           <p>
-            Two models read the same OSINT feature bus. Train them in{" "}
-            <code>ml/</code> on synthetic labels, then swap in operator-confirmed
-            empty legs as ground truth.
+            Empty-leg detection and personal return timing are separate heads on
+            the same aviation OSINT stack.
           </p>
         </div>
         <div className={styles.modelGrid}>
           <div className={styles.modelBlock}>
-            <h3>XGBoost</h3>
+            <h3>XGBoost + LSTM</h3>
             <p>
-              Tabular booster over distance, ground time, FBO scores, asymmetry,
-              turnaround flags, and one-way history. Best at crisp, explainable
-              empty-leg cues from a single candidate leg.
+              Detect which jets are flying empty from ADS-B features and short
+              tail histories.
             </p>
             <ul>
-              <li>Input: 18 engineered OSINT features</li>
-              <li>Output: P(empty_leg)</li>
-              <li>Train: <code>python ml/train_all.py</code></li>
+              <li>XGBoost: tabular P(empty_leg)</li>
+              <li>LSTM: sequence P(empty_leg)</li>
+              <li>Ensemble with rule priors</li>
             </ul>
           </div>
           <div className={styles.modelBlock}>
-            <h3>LSTM</h3>
+            <h3>Transformer (For you)</h3>
             <p>
-              Sequence model over the last few legs for a tail number. Catches
-              ferry patterns that only show up across time — Nice→Paris→Geneva,
-              not a simple A↔B return.
+              Encodes your past trips — home, corridor, stay length — and scores
+              P(ready_to_return). Matched against live empty legs toward home.
             </p>
             <ul>
-              <li>Input: 4 × 18 feature steps</li>
-              <li>Output: sequence P(empty_leg)</li>
-              <li>Ensemble: 45% XGB + 35% LSTM + 20% heuristics</li>
+              <li>Example: SIN→PVG, median stay 7d</li>
+              <li>Around day 7, surface PVG→SIN empty legs</li>
+              <li>Train: <code>python ml/train_all.py</code></li>
             </ul>
           </div>
         </div>

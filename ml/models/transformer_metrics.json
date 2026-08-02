@@ -1,0 +1,5 @@
+{
+  "model": "transformer_return",
+  "auc": 0.9907783954966205,
+  "epochs": 12
+}
