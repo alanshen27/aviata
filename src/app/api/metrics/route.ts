@@ -3,10 +3,13 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 async function readJson(rel: string) {
   try {
-    const text = await fs.readFile(path.join(process.cwd(), rel), "utf8");
+    // path is relative to the app root (reposition/)
+    const full = path.join(/* turbopackIgnore: true */ process.cwd(), rel);
+    const text = await fs.readFile(full, "utf8");
     return JSON.parse(text);
   } catch {
     return null;

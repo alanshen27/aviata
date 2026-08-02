@@ -22,19 +22,19 @@ type AnyJob = Job<Record<string, unknown>, unknown, JobName>;
 export async function processJob(job: AnyJob): Promise<unknown> {
   switch (job.name) {
     case "ingest:download":
-      return processIngestDownload(job as Job<IngestDownloadData>);
+      return processIngestDownload(job as unknown as Job<IngestDownloadData>);
     case "ingest:build":
-      return processIngestBuild(job as Job<IngestBuildData>);
+      return processIngestBuild(job as unknown as Job<IngestBuildData>);
     case "ingest:full":
-      return processIngestFull(job as Job<IngestFullData>);
+      return processIngestFull(job as unknown as Job<IngestFullData>);
     case "score:leg":
-      return processScoreLeg(job as Job<ScoreLegData>);
+      return processScoreLeg(job as unknown as Job<ScoreLegData>);
     case "recommend:traveler":
-      return processRecommend(job as Job<RecommendTravelerData>);
+      return processRecommend(job as unknown as Job<RecommendTravelerData>);
     case "collect:opensky":
-      return processCollect(job as Job<CollectOpenSkyData>);
+      return processCollect(job as unknown as Job<CollectOpenSkyData>);
     case "ml:train":
-      return processMlTrain(job as Job<MlTrainData>);
+      return processMlTrain(job as unknown as Job<MlTrainData>);
     default:
       throw new Error(`Unknown job: ${job.name}`);
   }
