@@ -1,5 +1,7 @@
 {
   "model": "xgboost",
+  "data_source": "open_weak_labels+synthetic(0.25)",
+  "rows": 18750,
   "feature_names": [
     "distance_nm",
     "ground_time_hours",
@@ -20,33 +22,33 @@
     "prior_leg_distance_nm",
     "heading_delta_deg"
   ],
-  "auc": 0.986470667904961,
-  "positive_rate": 0.2916,
+  "auc": 0.998995246744213,
+  "positive_rate": 0.5725333333333333,
   "report": {
     "0": {
-      "precision": 0.9725433526011561,
-      "recall": 0.9505649717514124,
-      "f1-score": 0.9614285714285714,
-      "support": 708.0
+      "precision": 0.9869321717485999,
+      "recall": 0.9893948845913911,
+      "f1-score": 0.9881619937694704,
+      "support": 1603.0
     },
     "1": {
-      "precision": 0.8863636363636364,
-      "recall": 0.934931506849315,
-      "f1-score": 0.91,
-      "support": 292.0
+      "precision": 0.9920671955202987,
+      "recall": 0.9902189101071263,
+      "f1-score": 0.9911421911421912,
+      "support": 2147.0
     },
-    "accuracy": 0.946,
+    "accuracy": 0.9898666666666667,
     "macro avg": {
-      "precision": 0.9294534944823962,
-      "recall": 0.9427482393003637,
-      "f1-score": 0.9357142857142857,
-      "support": 1000.0
+      "precision": 0.9894996836344493,
+      "recall": 0.9898068973492586,
+      "f1-score": 0.9896520924558307,
+      "support": 3750.0
     },
     "weighted avg": {
-      "precision": 0.9473788754598004,
-      "recall": 0.946,
-      "f1-score": 0.9464114285714286,
-      "support": 1000.0
+      "precision": 0.9898721440253566,
+      "recall": 0.9898666666666667,
+      "f1-score": 0.9898682561052655,
+      "support": 3750.0
     }
   }
 }

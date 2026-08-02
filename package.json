@@ -10,7 +10,11 @@
     "test": "vitest run",
     "ml:install": "python3 -m pip install -r ml/requirements.txt",
     "ml:train": "python3 ml/train_all.py",
-    "ml:infer": "python3 ml/infer.py"
+    "ml:train:open": "python3 ml/train_all.py --from-open-data",
+    "ml:infer": "python3 ml/infer.py",
+    "data:download": "python3 ml/ingest/download.py",
+    "data:build": "python3 ml/ingest/build_training.py",
+    "data:ingest": "python3 ml/ingest/download.py && python3 ml/ingest/build_training.py"
   },
   "dependencies": {
     "next": "^16.2.12",

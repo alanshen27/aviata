@@ -45,3 +45,8 @@ __pycache__/
 *.py[cod]
 .venv/
 ml/.venv/
+
+# open-data downloads (re-fetch with npm run data:download)
+ml/data/raw/**
+!ml/data/raw/.gitkeep
+ml/data/processed/*.parquet

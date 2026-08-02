@@ -25,11 +25,24 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+### Open training data + ingest
+
+See [`ml/data/SOURCES.md`](ml/data/SOURCES.md) for licenses.
+
+```bash
+npm run data:ingest          # OurAirports + private-jet legs sample + ADSBx registry + ADSB.lol live
+npm run ml:train:open        # XGBoost on weakly labeled open legs (+ some synthetic mix)
+```
+
+Status JSON: `GET /api/data`
+
 ### Train the Python models
 
 ```bash
 python3 -m pip install -r ml/requirements.txt
 python3 ml/train_all.py
+# or after ingest:
+python3 ml/train_all.py --from-open-data
 ```
 
 After training, `ml/models/` holds `xgb_emptyleg.joblib` and `lstm_emptyleg.pt`. The Next.js detector calls `ml/infer.py` when available and falls back to a builtin ensemble otherwise.

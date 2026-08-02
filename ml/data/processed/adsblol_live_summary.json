@@ -1,0 +1,123 @@
+{
+  "points": {
+    "HKG": {
+      "aircraft": 14,
+      "bizjet_typecode_hits": 0,
+      "samples": []
+    },
+    "LBG": {
+      "aircraft": 52,
+      "bizjet_typecode_hits": 1,
+      "samples": [
+        {
+          "hex": "49d629",
+          "r": "OK-DMK",
+          "t": "C56X",
+          "flight": "BOH412"
+        }
+      ]
+    },
+    "OPF": {
+      "aircraft": 52,
+      "bizjet_typecode_hits": 3,
+      "samples": [
+        {
+          "hex": "a87d44",
+          "r": "N646TX",
+          "t": "C56X",
+          "flight": "N646TX"
+        },
+        {
+          "hex": "a9683d",
+          "r": "N705MJ",
+          "t": "C25C",
+          "flight": "N705MJ"
+        },
+        {
+          "hex": "ab2883",
+          "r": "N818QS",
+          "t": "C700",
+          "flight": "EJA818"
+        }
+      ]
+    },
+    "SIN": {
+      "aircraft": 3,
+      "bizjet_typecode_hits": 0,
+      "samples": []
+    },
+    "TEB": {
+      "aircraft": 191,
+      "bizjet_typecode_hits": 29,
+      "samples": [
+        {
+          "hex": "a69fcb",
+          "r": "N526FX",
+          "t": "CL30",
+          "flight": "KOW526"
+        },
+        {
+          "hex": "a73b17",
+          "r": "N565SK",
+          "t": "H25B",
+          "flight": "N565SK"
+        },
+        {
+          "hex": "aa640c",
+          "r": "N769MB",
+          "t": "C25B",
+          "flight": "N769MB"
+        },
+        {
+          "hex": "acfc58",
+          "r": "N936EA",
+          "t": "C56X",
+          "flight": "N936EA"
+        },
+        {
+          "hex": "ab04bb",
+          "r": "N809QS",
+          "t": "C700",
+          "flight": "EJA809"
+        }
+      ]
+    },
+    "VNY": {
+      "aircraft": 163,
+      "bizjet_typecode_hits": 11,
+      "samples": [
+        {
+          "hex": "a94d94",
+          "r": "N699QS",
+          "t": "C68A",
+          "flight": "EJA699"
+        },
+        {
+          "hex": "aaabf6",
+          "r": "N787QS",
+          "t": "CL35",
+          "flight": "EJM787"
+        },
+        {
+          "hex": "a88dbb",
+          "r": "N650LG",
+          "t": "GLF4",
+          "flight": "N650LG"
+        },
+        {
+          "hex": "a305b0",
+          "r": "N294PW",
+          "t": "C25B",
+          "flight": "SIS94"
+        },
+        {
+          "hex": "a029e6",
+          "r": "N11AM",
+          "t": "LJ60",
+          "flight": "DLX11"
+        }
+      ]
+    }
+  },
+  "bizjet_like": 44
+}
