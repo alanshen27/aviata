@@ -105,29 +105,41 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
       </header>
 
       <div className={styles.stage}>
+        {/* Both canvases stay mounted (unmounting a WebGL canvas can
+            permanently lose the context on software renderers); the
+            inactive one is hidden and its frameloop paused. */}
+        <div
+          className={styles.canvasWrap}
+          style={{
+            visibility:
+              view === "globe" || view === "deals" ? "visible" : "hidden",
+          }}
+        >
+          <EarthScene
+            legs={filtered}
+            selectedClass={selectedClass}
+            active={view === "globe" || view === "deals"}
+          />
+        </div>
+        <div
+          className={styles.canvasWrap}
+          style={{ visibility: view === "fleet" ? "visible" : "hidden" }}
+        >
+          <PlaneChooser
+            selected={selectedClass}
+            personnel={personnel}
+            options={visibleFleet}
+            onSelect={(id) => setSelectedClass(id)}
+            active={view === "fleet"}
+          />
+        </div>
         {(view === "globe" || view === "deals") && (
-          <>
-            <div className={styles.canvasWrap}>
-              <EarthScene legs={filtered} selectedClass={selectedClass} />
-            </div>
-            <p className={styles.hint}>Drag to orbit · scroll to zoom</p>
-          </>
+          <p className={styles.hint}>Drag to orbit · scroll to zoom</p>
         )}
-
         {view === "fleet" && (
-          <>
-            <div className={styles.canvasWrap}>
-              <PlaneChooser
-                selected={selectedClass}
-                personnel={personnel}
-                options={visibleFleet}
-                onSelect={(id) => setSelectedClass(id)}
-              />
-            </div>
-            <p className={styles.hint}>
-              Filter by personnel · click a jet that fits
-            </p>
-          </>
+          <p className={styles.hint}>
+            Filter by personnel · click a jet that fits
+          </p>
         )}
 
         {view === "globe" && (
@@ -203,13 +215,13 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
                       className={styles.fleetChip}
                       style={{
                         color:
-                          selectedClass === f.id ? "#f0c14b" : undefined,
+                          selectedClass === f.id ? "#6a9bff" : undefined,
                       }}
                       onClick={() => setSelectedClass(f.id)}
                     >
                       <span>
                         <strong>{f.label}</strong>
-                        <div style={{ color: "#8a9aa6", fontSize: "0.82rem" }}>
+                        <div style={{ color: "#8b929c", fontSize: "0.82rem" }}>
                           {f.blurb}
                         </div>
                       </span>
@@ -279,7 +291,7 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
               height: "100vh",
               paddingTop: "4rem",
               background:
-                "radial-gradient(800px 400px at 80% 0%, rgba(215,161,46,0.12), transparent), #071018",
+                "radial-gradient(800px 400px at 80% 0%, rgba(59,118,240,0.08), transparent), #0b0e13",
             }}
           >
             <ForYou />
@@ -295,7 +307,7 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
               height: "100vh",
               paddingTop: "4rem",
               background:
-                "radial-gradient(800px 400px at 10% 10%, rgba(62,207,172,0.1), transparent), #071018",
+                "radial-gradient(800px 400px at 10% 10%, rgba(143,163,189,0.06), transparent), #0b0e13",
             }}
           >
             <AlertSignup />

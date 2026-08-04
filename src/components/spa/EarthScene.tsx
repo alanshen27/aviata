@@ -17,14 +17,14 @@ function GridSphere({ radius = 1.6 }: { radius?: number }) {
     <group>
       <mesh geometry={geo}>
         <meshStandardMaterial
-          color="#0c1c28"
+          color="#11151c"
           roughness={0.92}
           metalness={0.15}
         />
       </mesh>
       <mesh geometry={geo} scale={1.002}>
         <meshBasicMaterial
-          color="#3ecfac"
+          color="#9aa8b8"
           wireframe
           transparent
           opacity={0.07}
@@ -34,9 +34,9 @@ function GridSphere({ radius = 1.6 }: { radius?: number }) {
       <mesh scale={1.08}>
         <sphereGeometry args={[radius, 48, 32]} />
         <meshBasicMaterial
-          color="#d7a12e"
+          color="#3b76f0"
           transparent
-          opacity={0.045}
+          opacity={0.05}
           side={THREE.BackSide}
         />
       </mesh>
@@ -72,9 +72,9 @@ function LatLonGrid({ radius = 1.605 }: { radius?: number }) {
         <Line
           key={i}
           points={pts}
-          color="#c9d6df"
+          color="#c8cdd4"
           transparent
-          opacity={0.12}
+          opacity={0.1}
           lineWidth={1}
         />
       ))}
@@ -112,7 +112,7 @@ function RouteArc({
   return (
     <mesh geometry={geo}>
       <meshBasicMaterial
-        color={active ? "#f0c14b" : "#3ecfac"}
+        color={active ? "#6a9bff" : "#3b76f0"}
         transparent
         opacity={active ? 0.95 : 0.35 + confidence * 0.4}
       />
@@ -133,7 +133,7 @@ function AirportDot({
   return (
     <mesh position={[p.x, p.y, p.z]}>
       <sphereGeometry args={[active ? 0.028 : 0.016, 12, 12]} />
-      <meshBasicMaterial color={active ? "#f0c14b" : "#eef4f7"} />
+      <meshBasicMaterial color={active ? "#6a9bff" : "#f4f6f9"} />
     </mesh>
   );
 }
@@ -189,21 +189,25 @@ function SpinningEarth({
 export function EarthScene({
   legs,
   selectedClass,
+  active = true,
 }: {
   legs: EmptyLegCandidate[];
   selectedClass?: string | null;
+  /** Pauses the render loop when the scene is hidden. */
+  active?: boolean;
 }) {
   return (
     <Canvas
+      frameloop={active ? "always" : "never"}
       camera={{ position: [0, 0.4, 4.2], fov: 42 }}
       dpr={[1, 1.75]}
       gl={{ antialias: true, alpha: true }}
       style={{ width: "100%", height: "100%" }}
     >
-      <color attach="background" args={["#050b11"]} />
+      <color attach="background" args={["#080a0e"]} />
       <ambientLight intensity={0.55} />
       <directionalLight position={[4, 2, 3]} intensity={1.2} color="#fff1d0" />
-      <directionalLight position={[-3, -1, -2]} intensity={0.35} color="#3ecfac" />
+      <directionalLight position={[-3, -1, -2]} intensity={0.35} color="#9aa8b8" />
       <Stars radius={80} depth={40} count={2500} factor={3} saturation={0} fade speed={0.4} />
       <SpinningEarth legs={legs} selectedClass={selectedClass} />
       <OrbitControls
