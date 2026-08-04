@@ -47,7 +47,7 @@ export function PlaneChooser({
         color="#fff4d8"
       />
       <directionalLight position={[-4, 2, -2]} intensity={0.55} color="#9aa8b8" />
-      <pointLight position={[0, 2, 3]} intensity={0.5} color="#c8a860" />
+      <pointLight position={[0, 2, 3]} intensity={0.5} color="#9ab8ff" />
 
       {visible.map((opt, i) => (
         <group key={opt.id} position={[start + i * spacing, 0, 0]}>

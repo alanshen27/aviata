@@ -34,9 +34,9 @@ function GridSphere({ radius = 1.6 }: { radius?: number }) {
       <mesh scale={1.08}>
         <sphereGeometry args={[radius, 48, 32]} />
         <meshBasicMaterial
-          color="#c8a860"
+          color="#3b76f0"
           transparent
-          opacity={0.045}
+          opacity={0.05}
           side={THREE.BackSide}
         />
       </mesh>
@@ -112,7 +112,7 @@ function RouteArc({
   return (
     <mesh geometry={geo}>
       <meshBasicMaterial
-        color={active ? "#dcc28a" : "#c8a860"}
+        color={active ? "#6a9bff" : "#3b76f0"}
         transparent
         opacity={active ? 0.95 : 0.35 + confidence * 0.4}
       />
@@ -133,7 +133,7 @@ function AirportDot({
   return (
     <mesh position={[p.x, p.y, p.z]}>
       <sphereGeometry args={[active ? 0.028 : 0.016, 12, 12]} />
-      <meshBasicMaterial color={active ? "#dcc28a" : "#f2f1ec"} />
+      <meshBasicMaterial color={active ? "#6a9bff" : "#f4f6f9"} />
     </mesh>
   );
 }

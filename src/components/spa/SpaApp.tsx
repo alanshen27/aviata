@@ -215,7 +215,7 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
                       className={styles.fleetChip}
                       style={{
                         color:
-                          selectedClass === f.id ? "#dcc28a" : undefined,
+                          selectedClass === f.id ? "#6a9bff" : undefined,
                       }}
                       onClick={() => setSelectedClass(f.id)}
                     >
@@ -291,7 +291,7 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
               height: "100vh",
               paddingTop: "4rem",
               background:
-                "radial-gradient(800px 400px at 80% 0%, rgba(200,168,96,0.08), transparent), #0b0e13",
+                "radial-gradient(800px 400px at 80% 0%, rgba(59,118,240,0.08), transparent), #0b0e13",
             }}
           >
             <ForYou />
@@ -307,7 +307,7 @@ export function SpaApp({ legs }: { legs: EmptyLegCandidate[] }) {
               height: "100vh",
               paddingTop: "4rem",
               background:
-                "radial-gradient(800px 400px at 10% 10%, rgba(154,168,184,0.06), transparent), #0b0e13",
+                "radial-gradient(800px 400px at 10% 10%, rgba(143,163,189,0.06), transparent), #0b0e13",
             }}
           >
             <AlertSignup />

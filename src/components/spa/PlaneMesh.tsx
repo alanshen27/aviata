@@ -195,7 +195,7 @@ export function JetModel({
         color,
         metalness: 0.4,
         roughness: 0.22,
-        emissive: selected || hovered ? "#c8a860" : "#000000",
+        emissive: selected || hovered ? "#3b76f0" : "#000000",
         emissiveIntensity: selected ? 0.08 : hovered ? 0.04 : 0,
       }),
     [color, selected, hovered],
@@ -285,7 +285,7 @@ export function JetModel({
           <boxGeometry args={[0.95, 0.045, 0.012]} />
           <meshStandardMaterial
             color="#0b1016"
-            emissive="#d9c187"
+            emissive="#a9c4ff"
             emissiveIntensity={selected ? 0.5 : 0.18}
             metalness={0.7}
             roughness={0.25}
@@ -339,11 +339,11 @@ export function JetModel({
         <capsuleGeometry args={[0.035, 0.3, 4, 10]} />
       </mesh>
 
-      {/* gold cheatline */}
+      {/* cheatline */}
       <mesh position={[0.32, -0.045, 0]}>
         <cylinderGeometry args={[0.212, 0.212, 0.016, 32, 1, true]} />
         <meshStandardMaterial
-          color="#c8a860"
+          color="#2f5fc4"
           metalness={0.85}
           roughness={0.3}
           side={THREE.DoubleSide}
@@ -392,7 +392,7 @@ export function SelectableJet({
       {selected && (
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.55, 0]}>
           <ringGeometry args={[0.55, 0.58, 64]} />
-          <meshBasicMaterial color="#c8a860" transparent opacity={0.8} />
+          <meshBasicMaterial color="#3b76f0" transparent opacity={0.8} />
         </mesh>
       )}
     </group>
