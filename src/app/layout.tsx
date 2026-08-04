@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Figtree, Syne } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
-
-const figtree = Figtree({
-  variable: "--font-figtree",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-serif",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${figtree.variable}`}>{children}</body>
+      <body className={`${cormorant.variable} ${inter.variable}`}>{children}</body>
     </html>
   );
 }

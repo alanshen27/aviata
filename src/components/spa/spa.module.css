@@ -2,7 +2,7 @@
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: #050b11;
+  background: #080a0e;
   color: var(--vapor);
 }
 
@@ -15,8 +15,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(180deg, rgba(5, 11, 17, 0.92), rgba(5, 11, 17, 0));
+  padding: 1.1rem 2rem;
+  background: linear-gradient(180deg, rgba(8, 10, 14, 0.94), rgba(8, 10, 14, 0));
+  border-bottom: 1px solid rgba(200, 168, 96, 0.14);
   pointer-events: none;
 }
 
@@ -25,45 +26,46 @@
 }
 
 .brand {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  font-size: 0.9rem;
   cursor: pointer;
   border: none;
   background: none;
-  color: var(--vapor);
+  color: var(--signal-hot);
 }
 
 .tabs {
   display: flex;
-  gap: 0.35rem;
+  gap: 1.6rem;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
 
 .tab,
 .tabActive {
-  border: 1px solid transparent;
-  background: rgba(13, 26, 36, 0.55);
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: none;
   color: var(--muted);
-  border-radius: 4px;
-  padding: 0.55rem 0.85rem;
-  font-weight: 600;
-  font-size: 0.85rem;
+  border-radius: 0;
+  padding: 0.5rem 0.1rem;
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .tab:hover {
   color: var(--vapor);
-  border-color: var(--line);
 }
 
 .tabActive {
-  color: #14110a;
-  background: var(--signal);
-  border-color: var(--signal);
+  color: var(--signal-hot);
+  border-bottom-color: var(--signal);
 }
 
 .stage {
@@ -84,9 +86,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0 1.5rem 2rem;
+  padding: 0 2rem 3rem;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(5, 11, 17, 0.88) 55%);
+  background: linear-gradient(180deg, transparent, rgba(8, 10, 14, 0.9) 55%);
 }
 
 .hudInner {
@@ -97,21 +99,23 @@
 
 .brandHuge {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(3rem, 11vw, 6.5rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  font-weight: 500;
+  font-size: clamp(2.8rem, 9vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 0 0 0.85rem;
 }
 
 .headline {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
-  font-weight: 700;
-  max-width: 18ch;
+  font-size: clamp(1.3rem, 2.8vw, 2rem);
+  font-weight: 500;
+  font-style: italic;
+  max-width: 26ch;
   margin: 0 0 0.65rem;
-  line-height: 1.15;
+  line-height: 1.2;
+  color: var(--fog);
 }
 
 .sub {
@@ -130,10 +134,14 @@
 .btnPrimary,
 .btnGhost {
   border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 0.85rem 1.2rem;
-  font-weight: 600;
+  border-radius: var(--radius);
+  padding: 0.8rem 1.5rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .btnPrimary {
@@ -152,7 +160,8 @@
 }
 
 .btnGhost:hover {
-  border-color: rgba(238, 244, 247, 0.35);
+  border-color: var(--signal);
+  color: var(--signal-hot);
 }
 
 .panel {
@@ -163,18 +172,20 @@
   width: min(420px, calc(100vw - 2rem));
   max-height: calc(100vh - 6rem);
   overflow: auto;
-  padding: 1.1rem 1.15rem 1.25rem;
-  background: rgba(7, 16, 24, 0.82);
+  padding: 1.4rem 1.5rem 1.5rem;
+  background: rgba(11, 14, 19, 0.88);
   border: 1px solid var(--line);
-  border-radius: 6px;
-  backdrop-filter: blur(14px);
+  border-radius: var(--radius);
+  backdrop-filter: blur(16px);
   animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .panel h2 {
   font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.04em;
   margin: 0 0 0.35rem;
-  font-size: 1.35rem;
+  font-size: 1.6rem;
 }
 
 .panelLead {
@@ -200,7 +211,8 @@
 .personnelLabel strong {
   font-family: var(--font-display);
   color: var(--signal-hot);
-  font-size: 1.15rem;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
 .personnelRow {
@@ -211,20 +223,21 @@
 
 .paxChip,
 .paxChipActive {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(242, 241, 236, 0.14);
   background: transparent;
   color: var(--muted);
-  border-radius: 4px;
+  border-radius: var(--radius);
   min-width: 2.4rem;
   padding: 0.45rem 0.55rem;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .paxChip:hover {
   color: var(--vapor);
-  border-color: rgba(238, 244, 247, 0.35);
+  border-color: var(--signal);
 }
 
 .paxChipActive {
@@ -259,16 +272,19 @@
 
 .fleetChip strong {
   font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
 }
 
 .seatPill {
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mint);
-  border: 1px solid rgba(62, 207, 172, 0.35);
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
+  color: var(--signal-hot);
+  border: 1px solid rgba(200, 168, 96, 0.4);
+  padding: 0.18rem 0.5rem;
+  border-radius: var(--radius);
   white-space: nowrap;
 }
 
@@ -284,9 +300,9 @@
 
 .dealRoute {
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
 }
 
 .dealMeta {
@@ -300,10 +316,10 @@
   position: absolute;
   z-index: 5;
   top: 5.25rem;
-  left: 1.5rem;
+  left: 2rem;
   color: var(--muted);
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   animation: rise 0.7s ease both;
 }

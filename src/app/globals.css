@@ -1,17 +1,17 @@
 :root {
-  --ink: #071018;
-  --ink-2: #0d1a24;
-  --fog: #c9d6df;
-  --vapor: #eef4f7;
-  --signal: #d7a12e;
-  --signal-hot: #f0c14b;
-  --mint: #3ecfac;
-  --danger: #e85d4c;
-  --line: rgba(238, 244, 247, 0.12);
-  --muted: rgba(201, 214, 223, 0.72);
-  --font-display: var(--font-syne), "Arial Narrow", sans-serif;
-  --font-body: var(--font-figtree), "Segoe UI", sans-serif;
-  --radius: 4px;
+  --ink: #0b0e13;
+  --ink-2: #12161d;
+  --fog: #c8cdd4;
+  --vapor: #f2f1ec;
+  --signal: #c8a860;
+  --signal-hot: #dcc28a;
+  --mint: #9aa8b8;
+  --danger: #c96a5c;
+  --line: rgba(200, 168, 96, 0.22);
+  --muted: rgba(200, 205, 212, 0.68);
+  --font-display: var(--font-serif), "Georgia", serif;
+  --font-body: var(--font-sans), "Segoe UI", sans-serif;
+  --radius: 2px;
   --max: 1120px;
 }
 
@@ -24,7 +24,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: #050b11;
+  background: #080a0e;
   color: var(--vapor);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -33,9 +33,9 @@ body {
 
 body {
   background:
-    radial-gradient(1200px 600px at 80% -10%, rgba(215, 161, 46, 0.16), transparent 55%),
-    radial-gradient(900px 500px at 10% 20%, rgba(62, 207, 172, 0.08), transparent 50%),
-    linear-gradient(180deg, #0a1520 0%, var(--ink) 45%, #050b11 100%);
+    radial-gradient(1200px 600px at 80% -10%, rgba(200, 168, 96, 0.08), transparent 55%),
+    radial-gradient(900px 500px at 10% 20%, rgba(154, 168, 184, 0.05), transparent 50%),
+    linear-gradient(180deg, #0e1117 0%, var(--ink) 45%, #080a0e 100%);
   background-attachment: fixed;
 }
 
@@ -51,7 +51,7 @@ select {
 }
 
 ::selection {
-  background: rgba(215, 161, 46, 0.35);
+  background: rgba(200, 168, 96, 0.35);
 }
 
 @keyframes rise {
