@@ -1,5 +1,3 @@
-import type { EmptyLegCandidate } from "@/lib/types";
-
 const DEG = Math.PI / 180;
 
 /** Convert lat/lon to a point on a sphere of radius r (Y-up, Z toward 0°E). */
@@ -11,6 +9,16 @@ export function latLonToVec3(lat: number, lon: number, r = 1) {
     y: r * Math.cos(φ),
     z: r * Math.sin(φ) * Math.sin(θ),
   };
+}
+
+/** Inverse of latLonToVec3 for a point in the globe's local space. */
+export function vec3ToLatLon(x: number, y: number, z: number) {
+  const r = Math.hypot(x, y, z) || 1;
+  const lat = 90 - Math.acos(y / r) / DEG;
+  let lon = Math.atan2(z, -x) / DEG - 180;
+  if (lon < -180) lon += 360;
+  if (lon > 180) lon -= 360;
+  return { lat, lon };
 }
 
 /** Great-circle-ish arc points between two lat/lons, lifted above the surface. */
@@ -29,7 +37,6 @@ export function arcPoints(
 
   for (let i = 0; i <= segments; i++) {
     const t = i / segments;
-    // slerp-ish via normalize lerp
     const x = a.x + (b.x - a.x) * t;
     const y = a.y + (b.y - a.y) * t;
     const z = a.z + (b.z - a.z) * t;
@@ -45,20 +52,17 @@ export function arcPoints(
   return points;
 }
 
-export function legsToArcs(legs: EmptyLegCandidate[], limit = 12) {
-  return legs.slice(0, limit).map((leg) => ({
-    id: leg.id,
-    origin: {
-      lat: leg.origin.lat,
-      lon: leg.origin.lon,
-      code: leg.origin.iata ?? leg.origin.icao,
-    },
-    destination: {
-      lat: leg.destination.lat,
-      lon: leg.destination.lon,
-      code: leg.destination.iata ?? leg.destination.icao,
-    },
-    confidence: leg.confidence,
-    aircraftClass: leg.aircraftType.aircraftClass,
-  }));
+/** Midpoint of two lat/lons along the great circle. */
+export function midpoint(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const a = latLonToVec3(lat1, lon1, 1);
+  const b = latLonToVec3(lat2, lon2, 1);
+  return vec3ToLatLon(a.x + b.x, a.y + b.y, a.z + b.z);
+}
+
+/** Central angle (radians) between two lat/lons. */
+export function angularDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const a = latLonToVec3(lat1, lon1, 1);
+  const b = latLonToVec3(lat2, lon2, 1);
+  const dot = Math.min(1, Math.max(-1, a.x * b.x + a.y * b.y + a.z * b.z));
+  return Math.acos(dot);
 }

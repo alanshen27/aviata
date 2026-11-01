@@ -1,4 +1,4 @@
-# REPOSITION
+# AVIATA
 
 Detect private-jet **empty legs** from ADS-B OSINT, score them with **XGBoost + LSTM**, and sell alerts / seats.
 

@@ -1,204 +1,66 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import type { AircraftClass } from "@/lib/types";
 
-export interface FleetOption {
-  id: AircraftClass;
+export interface FleetClass {
+  id: string;
+  /** Feed category label (Limitless Sky RSS) */
+  category: string;
   label: string;
-  blurb: string;
-  /** Typical passenger / personnel capacity */
-  seats: number;
-  scale: number;
-  color: string;
+  examples: string;
+  seats: string;
+  rangeNm: string;
+  cruiseKt: number;
 }
 
-/** Stepped party sizes for the fleet filter. */
-export const PERSONNEL_OPTIONS = [2, 4, 6, 8, 10, 12, 14, 16] as const;
-
-export const FLEET: FleetOption[] = [
-  {
-    id: "very_light",
-    label: "Very light",
-    blurb: "CJ2 hops",
-    seats: 6,
-    scale: 0.72,
-    color: "#8fd6c4",
-  },
-  {
-    id: "light",
-    label: "Light",
-    blurb: "Citation / PC-24",
-    seats: 8,
-    scale: 0.88,
-    color: "#c9d6df",
-  },
-  {
-    id: "midsize",
-    label: "Midsize",
-    blurb: "Latitude / Lear",
-    seats: 9,
-    scale: 1,
-    color: "#eef4f7",
-  },
-  {
-    id: "super_midsize",
-    label: "Super-mid",
-    blurb: "Challenger 350",
-    seats: 10,
-    scale: 1.15,
-    color: "#f0c14b",
-  },
-  {
-    id: "heavy",
-    label: "Heavy",
-    blurb: "G450 / CL605",
-    seats: 14,
-    scale: 1.35,
-    color: "#d7a12e",
-  },
-  {
-    id: "ultra_long_range",
-    label: "Ultra long",
-    blurb: "G650 / Global",
-    seats: 16,
-    scale: 1.55,
-    color: "#ffd978",
-  },
+export const FLEET: FleetClass[] = [
+  { id: "turboprop", category: "Turboprop", label: "Turboprop", examples: "PC-12, King Air 350", seats: "6–9", rangeNm: "1,500", cruiseKt: 280 },
+  { id: "very_light", category: "Very Light", label: "Very light jet", examples: "Phenom 100, Citation M2", seats: "4–6", rangeNm: "1,200", cruiseKt: 380 },
+  { id: "light", category: "Light", label: "Light jet", examples: "Phenom 300, CJ3, Learjet 40", seats: "6–8", rangeNm: "1,800", cruiseKt: 420 },
+  { id: "midsize", category: "Midsize", label: "Midsize", examples: "Citation XLS, Learjet 60, Hawker 800", seats: "7–9", rangeNm: "2,200", cruiseKt: 440 },
+  { id: "super_midsize", category: "Super Midsize", label: "Super-midsize", examples: "Challenger 300/350, Praetor 600", seats: "8–10", rangeNm: "3,200", cruiseKt: 460 },
+  { id: "heavy", category: "Heavy", label: "Heavy", examples: "Falcon 2000, G450, Challenger 605", seats: "10–14", rangeNm: "4,000", cruiseKt: 470 },
+  { id: "ultra_long_range", category: "Ultra Long Range", label: "Ultra long range", examples: "G650, Global 6000, Falcon 8X", seats: "13–16", rangeNm: "6,000+", cruiseKt: 480 },
 ];
 
-export function fleetForPersonnel(personnel: number): FleetOption[] {
-  return FLEET.filter((f) => f.seats >= personnel);
+export function classForCategory(category: string): FleetClass | null {
+  const c = category.toLowerCase();
+  return FLEET.find((f) => f.category.toLowerCase() === c) ?? null;
 }
 
-/** Low-poly business jet — fuselage, wings, tail, engines. */
-export function JetModel({
-  color,
-  scale = 1,
-  selected,
-  hovered,
-}: {
-  color: string;
-  scale?: number;
-  selected?: boolean;
-  hovered?: boolean;
-}) {
-  const group = useRef<THREE.Group>(null);
-  const mat = useMemo(
-    () =>
-      new THREE.MeshStandardMaterial({
-        color,
-        metalness: 0.55,
-        roughness: 0.28,
-        emissive: selected || hovered ? color : "#000000",
-        emissiveIntensity: selected ? 0.22 : hovered ? 0.12 : 0,
-      }),
-    [color, selected, hovered],
-  );
-
+/**
+ * "Jet" — Poly by Google, CC-BY 3.0, via poly.pizza/m/bgUY8zN2Bq9.
+ * Shown on a turntable; scale hints at cabin class.
+ */
+export function JetModel({ scale = 1, spin = true }: { scale?: number; spin?: boolean }) {
+  const { scene } = useGLTF("/models/jet.glb");
+  const model = useMemo(() => {
+    const m = scene.clone(true);
+    m.traverse((o) => {
+      if ((o as THREE.Mesh).isMesh) {
+        const mesh = o as THREE.Mesh;
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+      }
+    });
+    return m;
+  }, [scene]);
+  const ref = useRef<THREE.Group>(null);
+  const s = useRef(scale);
   useFrame((_, dt) => {
-    if (!group.current) return;
-    const target = selected ? 0.35 : hovered ? 0.15 : 0;
-    group.current.rotation.y += dt * (selected ? 0.9 : 0.25);
-    group.current.position.y = THREE.MathUtils.lerp(
-      group.current.position.y,
-      target,
-      0.08,
-    );
+    if (!ref.current) return;
+    if (spin) ref.current.rotation.y += dt * 0.25;
+    s.current = THREE.MathUtils.lerp(s.current, scale, 0.08);
+    ref.current.scale.setScalar(s.current);
   });
-
-  const s = scale;
   return (
-    <group ref={group} scale={s} rotation={[0.1, 0.4, 0]}>
-      {/* fuselage */}
-      <mesh material={mat} rotation={[0, 0, Math.PI / 2]}>
-        <capsuleGeometry args={[0.18, 1.35, 6, 16]} />
-      </mesh>
-      {/* nose taper cue */}
-      <mesh material={mat} position={[0.85, 0.02, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <coneGeometry args={[0.16, 0.35, 12]} />
-      </mesh>
-      {/* wings */}
-      <mesh material={mat} position={[0, -0.05, 0]} rotation={[0, 0, 0.05]}>
-        <boxGeometry args={[0.55, 0.04, 2.1]} />
-      </mesh>
-      {/* winglet L/R */}
-      <mesh material={mat} position={[0.05, 0.12, 1.0]}>
-        <boxGeometry args={[0.08, 0.28, 0.04]} />
-      </mesh>
-      <mesh material={mat} position={[0.05, 0.12, -1.0]}>
-        <boxGeometry args={[0.08, 0.28, 0.04]} />
-      </mesh>
-      {/* vertical stabilizer */}
-      <mesh material={mat} position={[-0.7, 0.28, 0]}>
-        <boxGeometry args={[0.35, 0.45, 0.05]} />
-      </mesh>
-      {/* engines */}
-      <mesh material={mat} position={[-0.35, -0.05, 0.35]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.09, 0.09, 0.45, 12]} />
-      </mesh>
-      <mesh material={mat} position={[-0.35, -0.05, -0.35]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.09, 0.09, 0.45, 12]} />
-      </mesh>
-      {/* windows strip */}
-      <mesh position={[0.1, 0.08, 0]}>
-        <boxGeometry args={[0.7, 0.04, 0.22]} />
-        <meshStandardMaterial
-          color="#071018"
-          emissive="#3ecfac"
-          emissiveIntensity={selected ? 0.6 : 0.25}
-          metalness={0.8}
-          roughness={0.2}
-        />
-      </mesh>
+    <group ref={ref} position={[0, -0.2, 0]}>
+      <primitive object={model} />
     </group>
   );
 }
 
-export function SelectableJet({
-  option,
-  position,
-  selected,
-  onSelect,
-}: {
-  option: FleetOption;
-  position: [number, number, number];
-  selected: boolean;
-  onSelect: (id: AircraftClass) => void;
-}) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <group
-      position={position}
-      onClick={(e) => {
-        e.stopPropagation();
-        onSelect(option.id);
-      }}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setHovered(true);
-        document.body.style.cursor = "pointer";
-      }}
-      onPointerOut={() => {
-        setHovered(false);
-        document.body.style.cursor = "auto";
-      }}
-    >
-      <JetModel
-        color={option.color}
-        scale={option.scale * (selected ? 1.08 : 1)}
-        selected={selected}
-        hovered={hovered}
-      />
-      {selected && (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.55, 0]}>
-          <ringGeometry args={[0.55, 0.62, 48]} />
-          <meshBasicMaterial color="#d7a12e" transparent opacity={0.85} />
-        </mesh>
-      )}
-    </group>
-  );
-}
+useGLTF.preload("/models/jet.glb");
