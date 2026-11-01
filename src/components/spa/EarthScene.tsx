@@ -192,7 +192,7 @@ function SelectedRoute({ leg }: { leg: LiveLeg }) {
   return (
     <group>
       <mesh geometry={tube}>
-        <meshBasicMaterial color="#2b7fff" />
+        <meshBasicMaterial color="#38bdf8" />
       </mesh>
       <Jet curve={curve} />
       {[
@@ -264,7 +264,7 @@ function Pin({ focus }: { focus: Focus }) {
     ring.current.scale.setScalar(s);
     (ring.current.material as THREE.MeshBasicMaterial).opacity = 0.6 * (1 - (s - 1) / 1.6);
   });
-  const color = focus.kind === "you" ? "#2b7fff" : "#ff5a36";
+  const color = focus.kind === "you" ? "#38bdf8" : "#ff7a45";
   return (
     <group position={[p.x, p.y, p.z]} quaternion={q}>
       <mesh ref={ring} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.002, 0]}>

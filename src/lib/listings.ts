@@ -165,7 +165,7 @@ export function parseFeed(xml: string): LiveLeg[] {
 async function fetchWindow(fromDate: string): Promise<string> {
   const u = `${FEED}?max=200&fromDate=${fromDate}`;
   const res = await fetch(u, {
-    headers: { "User-Agent": "reposition/0.2 (empty-leg globe)" },
+    headers: { "User-Agent": "aviata/0.3 (empty-leg globe)" },
     signal: AbortSignal.timeout(20_000),
   });
   if (!res.ok) throw new Error(`feed ${res.status}`);

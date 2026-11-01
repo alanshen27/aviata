@@ -6,6 +6,7 @@ import type { LiveLeg } from "@/lib/listings";
 import type { AirportInfo } from "@/lib/airportTable";
 import type { Focus } from "./EarthScene";
 import { FLEET, classForCategory } from "./PlaneMesh";
+import { Logo } from "@/components/Logo";
 import styles from "./spa.module.css";
 
 const EarthScene = dynamic(() => import("./EarthScene").then((m) => m.EarthScene), {
@@ -200,8 +201,7 @@ export function SpaApp({ legs }: { legs: LiveLeg[] }) {
     <div className={styles.shell}>
       <header className={styles.top}>
         <button type="button" className={styles.brand} onClick={() => { setView("earth"); setSelectedId(null); }}>
-          <span className={styles.brandDot} />
-          Reposition
+          <Logo size={26} />
         </button>
 
         <div className={styles.search}>
@@ -244,7 +244,7 @@ export function SpaApp({ legs }: { legs: LiveLeg[] }) {
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => choosePoint({ lat: a.lat, lon: a.lon, label: `${a.city || a.name} (${a.code})`, kind: "search" }, q)}
                   >
-                    <span className={styles.code}>{a.code}</span>
+                    <span className={`${styles.code} ${styles.mono}`}>{a.code}</span>
                     <span>{a.name}</span>
                     <span className={styles.dim}>{a.city}, {a.country}</span>
                   </button>
@@ -322,7 +322,9 @@ export function SpaApp({ legs }: { legs: LiveLeg[] }) {
                   <button type="button" className={styles.row} onClick={() => select(leg)}>
                     <div className={styles.rowTop}>
                       <span className={styles.route}>
-                        {leg.origin.code} <span className={styles.arrow}>→</span> {leg.destination.code}
+                        <span className={styles.mono}>{leg.origin.code}</span>
+                        <span className={styles.arrow}>→</span>
+                        <span className={styles.mono}>{leg.destination.code}</span>
                       </span>
                       <span className={styles.price}>{leg.priceText}</span>
                     </div>
@@ -354,7 +356,7 @@ export function SpaApp({ legs }: { legs: LiveLeg[] }) {
             </button>
             <div className={styles.detailRoute}>
               <div>
-                <strong>{selected.origin.code}</strong>
+                <strong className={styles.mono}>{selected.origin.code}</strong>
                 <span>{selected.origin.city || selected.origin.name}</span>
               </div>
               <div className={styles.detailLine}>
@@ -363,7 +365,7 @@ export function SpaApp({ legs }: { legs: LiveLeg[] }) {
                 <span>{selected.distanceKm.toLocaleString()} km</span>
               </div>
               <div className={styles.right}>
-                <strong>{selected.destination.code}</strong>
+                <strong className={styles.mono}>{selected.destination.code}</strong>
                 <span>{selected.destination.city || selected.destination.name}</span>
               </div>
             </div>

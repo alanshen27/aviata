@@ -5,11 +5,13 @@
   --text-2: #475569;
   --text-3: #94a3b8;
   --line: #e5e9f0;
-  --primary: #2b7fff;
-  --primary-soft: #eaf2ff;
-  --accent: #ff5a36;
+  --primary: #0b1220;
+  --sky: #38bdf8;
+  --primary-soft: #e8f6fd;
+  --accent: #ff7a45;
   --radius: 12px;
   --font-body: var(--font-inter, Inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono, "IBM Plex Mono"), ui-monospace, Menlo, monospace;
 }
 
 * {

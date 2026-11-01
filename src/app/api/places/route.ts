@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const UA = "reposition/0.2 (empty-leg globe; contact via repo)";
+const UA = "aviata/0.3 (empty-leg globe; contact via repo)";
 const cache = new Map<string, { at: number; body: unknown }>();
 const TTL = 3600_000;
 
